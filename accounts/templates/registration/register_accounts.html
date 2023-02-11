@@ -1,0 +1,16 @@
+{% extends 'registration/base_user_view.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+{% endblock %}
+
+
+
+{% block content %}
+    <form action="">
+        {% csrf_token %}
+
+        <button type="submit" class="btn btn-primary">ثبت نام</button>
+    </form>
+{% endblock %}

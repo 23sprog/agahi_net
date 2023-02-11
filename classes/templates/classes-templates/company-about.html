@@ -1,0 +1,24 @@
+{% extends "index/base.html" %}
+
+{% block title %}
+    {{ company.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "classes:company_detail" company.id company.slug %}">کلاس ها</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">راه های تماس با آموزشگاه</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ company.name }}</h5>
+        <p class="card-text">{{ company.desc }}</p>
+      </div>
+    </div>
+{% endblock %}

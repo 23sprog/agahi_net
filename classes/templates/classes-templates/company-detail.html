@@ -1,0 +1,38 @@
+{% extends "index/base.html" %}
+
+{% block title %}
+    {{ company.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link active font-med" href="#">کلاس ها</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" class="font-med" href="{% url "classes:company_about" company.id company.slug %}">راه های تماس با آموزشگاه</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+          {% for class in classes %}
+          <a href="{% url "classes:class_detail" class.id class.slug %}" class=" list-group-item-action">
+              <div class="p-1">
+                <ul class="list-group list-group-horizontal row text-center">
+                      <li class="list-group-item col-1 ">{{ class.name }}</li>
+                      <li class="list-group-item col-7">{{ class.desc|truncatewords:20 }}</li>
+                      <li class="list-group-item col-2">
+                          <img src="{{ class.img.url }}" style="width:50px; height: 65px;">
+                      </li>
+                      <li class="list-group-item col-2 bg-success text-light font-med">
+                          {{ class.price }}تومان
+                      </li>
+                </ul>
+              </div>
+          </a>
+          {% endfor %}
+      </div>
+    </div>
+{% endblock %}

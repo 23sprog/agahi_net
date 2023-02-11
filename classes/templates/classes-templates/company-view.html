@@ -1,0 +1,19 @@
+{% extends "index/base.html" %}
+
+{% block title %}
+    آموزشگاه ها
+{% endblock %}
+
+{% block content %}
+    {% for company in object_list %}
+        <div class="container mt-4 bg-light bg-gradient p-3 rounded border border-secondary shadow">
+            <div class="row">
+                <div class="col-9">
+                    <h3><a href="{% url "classes:company_detail" company.id  company.slug %}">{{ company.name }}</a></h3>
+                    <p>{{ company.desc }}</p>
+                </div>
+                <img src="{{ company.img.url }}" alt="عکس {{ company.name }} " style="width: 200px;height: 200px;" class="img-thumbnail col-3" >
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

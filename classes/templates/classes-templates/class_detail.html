@@ -1,0 +1,25 @@
+{% extends "index/base.html" %}
+
+{% block title %}
+    {{ object.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-3 container p-2 shadow-lg" style="max-width: 80%;">
+      <div class="row g-0">
+        <div class="col-md-12 row">
+          <img src="{{ classes.img.url }}" class="img-fluid col-2" alt="لوگو{{ object.name }}">
+            <div class="col-7"></div>
+          <p class="text-success fs-3 col-3 text-center order-5 mt-5 font-med">{{ classes.price }} تومان</p>
+        </div>
+
+        <div class="col-md-12 ">
+          <div class="card-body p-3">
+            <h5 class="card-title font-bold">{{ object.name }}</h5>
+            <p class="card-text">{{ object.desc }}</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
