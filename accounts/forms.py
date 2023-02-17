@@ -3,6 +3,7 @@ from .models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+
 class CreationUserForm(forms.ModelForm):
 
     password1= forms.CharField(label="گذرواژه", widget=forms.PasswordInput)
@@ -52,5 +53,33 @@ class ChangeUserForm(forms.ModelForm):
 
 
 
-# class LoginForm(forms.ModelForm):
-#     pass
+
+class RegisterUserForm(forms.Form):
+    email = forms.EmailField(max_length=255, label="ایمیل", widget=forms.TextInput({"class": "form-control"}))
+    username = forms.CharField(max_length=255, label="نام کاربری", widget=forms.TextInput({"class": "form-control"}))
+    password1 = forms.CharField(label="گذرواژه", widget=forms.PasswordInput({"class": "form-control"}))
+    password2 = forms.CharField(label="تایید گذرواژه", widget=forms.PasswordInput({"class": "form-control"}))
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd["password1"] and cd["password2"] and cd["password1"] == cd["password2"]:
+            return cd["password2"]
+        raise ValidationError("گذرواژه ها مطابقت ندارند")
+
+    def clean_email(self):
+        cd = self.cleaned_data
+        email_exists = User.object.filter(email=cd["email"]).exists()
+        if email_exists:
+            raise ValidationError("این ایمیل قبلا در سایت ثبت نام شده است")
+        return cd["email"]
+
+    def clean_username(self):
+        cd = self.cleaned_data
+        username_exists = User.object.filter(email=cd["username"]).exists()
+        if username_exists:
+            raise ValidationError("این نام کاربری قبلا در سایت ثبت نام شده است")
+        return cd["username"]
+
+class LoginUserForm(forms.Form):
+    email = forms.EmailField(max_length=255, label="ایمیل", widget=forms.TextInput({"class": "form-control"}))
+    password = forms.CharField(label="گذرواژه", widget=forms.PasswordInput({"class": "form-control"}))

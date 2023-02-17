@@ -8,25 +8,13 @@
 
 
 {% block content %}
-    <form action="">
+    <h4 class="font-bold container">ثبت نام</h4>
+    <form action="{% url "account:register" %}" method="post">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="email" class="form-label">ایمیل</label>
-            <input type="email" class="form-control" id="email" placeholder="ایمیل" name="email">
+        <div class="p-2">
+            {{ form }}
         </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">نام کاربری</label>
-            <input type="text" class="form-control" id="username" placeholder="نام کاربری" name="username">
-        </div>
-        <div class="mb-3">
-            <label for="password1" class="form-label">گذرواژه</label>
-            <input type="password" class="form-control" id="password1" placeholder="گذرواژه" name="password1">
-        </div>
-        <div class="mb-3">
-            <label for="password2" class="form-label">تایید گذرواژه</label>
-            <input type="password" class="form-control" id="password2" placeholder="تایید گذرواژه" name="password2">
-        </div>  
-        
+
         <button type="submit" class="btn btn-primary btn-lg ml-0 mr-auto">ثبت نام</button>
     </form>
 {% endblock %}
