@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View, CreateView
+from django.views.generic import View, CreateView,UpdateView
 from .forms import CreationUserForm, RegisterUserForm, LoginUserForm
 from .models import User
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
-# Create your views here.
+from django.core.exceptions import ValidationError
 
 
 def index(req):
@@ -52,3 +52,11 @@ class LoginUserView(View):
 def logout_user(req):
     logout(req)
     return redirect("account:login")
+
+class ProfileUserView(UpdateView):
+    template_name = "registration/profile_accounts.html"
+    model = User
+    fields = ["email", "username", "first_name", "last_name", "is_company_admin"]
+
+    def get_object(self, queryset=None):
+        return User.object.get(pk=self.request.user.pk)

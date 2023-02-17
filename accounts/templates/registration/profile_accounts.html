@@ -1,0 +1,17 @@
+{% extends "registration/base_profile_view.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    پروفایل
+{% endblock %}
+
+{% block content %}
+    <form class="p-1" method="post" action="">{% csrf_token %}
+        <div class="row">
+            <div class="col-6">{{ form.first_name|crispy }}</div>
+            <div class="col-6">{{ form.last_name }}</div>
+        </div>
+        <button class="btn btn-success" type="submit">ویرایش پروفایل</button>
+    </form>
+
+{% endblock %}

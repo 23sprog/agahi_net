@@ -9,10 +9,12 @@
 {#    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v[X.Y.Z]/dist/font-face.css" rel="stylesheet" type="text/css" />#}
 </head>
 <body>
-    {% include "index/messages.html" %}
     <div class="card container shadow margin-center" style="width: 28rem;">
         <div class="card-body">
             <h5 class="card-title h3-font mt-4 mb-4 bg-secondary rounded p-3 text-white">آگهی نت</h5>
+            <div class="container">
+                {% include "index/messages.html" %}
+            </div>
             {% block content %}{% endblock %}
                 <a href="{% url "index" %}" class="ml-0 mr-auto">برگشت به سایت</a>
         </div>

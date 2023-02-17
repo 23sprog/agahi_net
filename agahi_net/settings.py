@@ -28,8 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
-# Vesion Bootstrap Crispy Forms
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 
 # Application definition
 
@@ -40,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
     'accounts.apps.AccountsConfig',
     'classes.apps.ClassesConfig',
-    
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +57,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'agahi_net.urls'
+
+# Vesion Bootstrap Crispy Forms
+
 
 TEMPLATES = [
     {

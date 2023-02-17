@@ -9,12 +9,12 @@ from .managers import UserManager
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True,verbose_name="ایمیل")
     username = models.CharField(max_length=255, unique=True,verbose_name="نام کاربری")
-    first_name = models.CharField(max_length=200,verbose_name="نام")
-    last_name = models.CharField(max_length=200,verbose_name="نام خانوادگی")
-    is_active = models.BooleanField(default=True,verbose_name="کاربر فعال")
-    is_admin = models.BooleanField(default=False,verbose_name="وضعیت کارمندی")
-    is_company_admin = models.BooleanField(default=False,verbose_name="مدیر موسسه")
-    courses = models.ManyToManyField(Classes,null=True, blank=True,verbose_name="دوره ها")
+    first_name = models.CharField(max_length=200, verbose_name="نام")
+    last_name = models.CharField(max_length=200, verbose_name="نام خانوادگی")
+    is_active = models.BooleanField(default=True, verbose_name="کاربر فعال")
+    is_admin = models.BooleanField(default=False, verbose_name="وضعیت کارمندی")
+    is_company_admin = models.BooleanField(default=False, verbose_name="مدیر موسسه")
+    courses = models.ManyToManyField(Classes, blank=True, verbose_name="دوره ها")
 
 
     USERNAME_FIELD = "email"
