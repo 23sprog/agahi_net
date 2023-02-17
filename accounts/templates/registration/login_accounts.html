@@ -1,0 +1,20 @@
+{% extends 'registration/base_user_view.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+{% endblock %}
+
+
+
+{% block content %}
+    <h4 class="font-bold container">ورود</h4>
+    <form action="{% url "account:login" %}" method="post">
+        {% csrf_token %}
+        <div class="p-2">
+            {{ form }}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg ml-0 mr-auto">ورود</button>
+    </form>
+{% endblock %}
