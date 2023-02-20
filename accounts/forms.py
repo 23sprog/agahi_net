@@ -31,7 +31,7 @@ class CreationUserForm(forms.ModelForm):
     
     def clean_username(self):
         cd = self.cleaned_data
-        username_exists = User.object.filter(email=cd["username"]).exists()
+        username_exists = User.object.filter(username=cd["username"]).exists()
         if username_exists:
             raise ValidationError("این نام کاربری قبلا در سایت ثبت نام شده است")
         return cd["username"]
@@ -49,7 +49,7 @@ class ChangeUserForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(help_text="you can change password using <a href=\"../password/\">this form</a>.")
     class Meta:
         model = User
-        fields = ("email","username","first_name","last_name","is_active","is_admin","is_company_admin","courses")
+        fields = ("email", "username", "first_name", "last_name", "is_active", "is_admin", "is_company_admin", "courses")
 
 
 
@@ -75,7 +75,7 @@ class RegisterUserForm(forms.Form):
 
     def clean_username(self):
         cd = self.cleaned_data
-        username_exists = User.object.filter(email=cd["username"]).exists()
+        username_exists = User.object.filter(username=cd["username"]).exists()
         if username_exists:
             raise ValidationError("این نام کاربری قبلا در سایت ثبت نام شده است")
         return cd["username"]
@@ -83,3 +83,21 @@ class RegisterUserForm(forms.Form):
 class LoginUserForm(forms.Form):
     email = forms.EmailField(max_length=255, label="ایمیل", widget=forms.TextInput({"class": "form-control"}))
     password = forms.CharField(label="گذرواژه", widget=forms.PasswordInput({"class": "form-control"}))
+
+class ProfileUserForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user")
+        super(ProfileUserForm, self).__init__(*args, **kwargs)
+        if not user.is_admin:
+            self.fields["is_company_admin"].disabled=True
+    class Meta:
+        model = User
+        fields = ("email", "username", "first_name", "last_name", "is_company_admin")
+        widgets = {
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "is_company_admin": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }

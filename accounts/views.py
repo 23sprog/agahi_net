@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import View, CreateView,UpdateView
-from .forms import CreationUserForm, RegisterUserForm, LoginUserForm
+from .forms import CreationUserForm, RegisterUserForm, LoginUserForm, ProfileUserForm
 from .models import User
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
 from django.core.exceptions import ValidationError
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 def index(req):
-    return render(req, "index/index.html", {})
+    return render(req, "index.html", {})
 
 
     
@@ -49,14 +52,21 @@ class LoginUserView(View):
             return redirect("account:login")
         return render(request, self.template_name, {"form": form})
 
+@login_required
 def logout_user(req):
     logout(req)
     return redirect("account:login")
 
-class ProfileUserView(UpdateView):
+class ProfileUserView(LoginRequiredMixin, UpdateView):
     template_name = "registration/profile_accounts.html"
     model = User
-    fields = ["email", "username", "first_name", "last_name", "is_company_admin"]
+    form_class = ProfileUserForm
+    success_url = reverse_lazy("index")
 
     def get_object(self, queryset=None):
         return User.object.get(pk=self.request.user.pk)
+
+    def get_form_kwargs(self):
+        kwargs = super(ProfileUserView, self).get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs

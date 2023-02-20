@@ -1,9 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import  AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from classes.models import Classes
 from .managers import UserManager
-
-# Create your models here.
 
 
 class User(AbstractBaseUser):

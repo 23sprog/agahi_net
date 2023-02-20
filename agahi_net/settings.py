@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+from django.shortcuts import reverse
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'classes.apps.ClassesConfig',
     'crispy_forms',
+    'star_ratings',
+
 ]
+LOGOUT_REDIRECT_URL = "account:login"
+LOGIN_URL = "account:login"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 

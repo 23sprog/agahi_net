@@ -7,9 +7,42 @@
 
 {% block content %}
     <form class="p-1" method="post" action="">{% csrf_token %}
+
         <div class="row">
-            <div class="col-6">{{ form.first_name|crispy }}</div>
-            <div class="col-6">{{ form.last_name }}</div>
+            <div class="col-4 container">
+                <label class="form-label">{{ form.email.label_tag }}</label>
+
+                {{ form.email }}
+
+            </div>
+            <div class="col-4 container">
+                <label class="form-label">{{ form.username.label_tag }}</label>
+                {{ form.username }}
+                <div class="text-danger">
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 container">
+                <label class="form-label">{{ form.first_name.label_tag }}</label>
+                {{ form.first_name }}
+            </div>
+            <div class="col-4 container">
+                <label class="form-label">{{ form.last_name.label_tag }}</label>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <div class="form-check row">
+            <div class="col-3">
+              <label class="form-check-label" for="flexCheckIndeterminate">
+                {{ form.is_company_admin.label_tag }}
+                {{ form.is_company_admin }}
+              </label>
+            </div>
         </div>
         <button class="btn btn-success" type="submit">ویرایش پروفایل</button>
     </form>

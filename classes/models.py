@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -23,7 +24,6 @@ class Company(models.Model):
     slug = models.SlugField(unique=True, verbose_name="اسلاگ")
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, related_name="company", verbose_name="دسته بندی")
     desc = models.TextField(default="توضیحات", verbose_name="توضیحات")
-
     class Meta:
         verbose_name = "آموزشگاه"
         verbose_name_plural = "آموشگاه ها"
