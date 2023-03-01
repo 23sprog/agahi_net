@@ -1,19 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
-from classes.models import Classes
+from classes.models import Classes, Company
 from .managers import UserManager
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(unique=True,verbose_name="ایمیل")
+    email = models.EmailField(unique=True, verbose_name="ایمیل")
     username = models.CharField(max_length=255, unique=True,verbose_name="نام کاربری")
     first_name = models.CharField(max_length=200, verbose_name="نام")
     last_name = models.CharField(max_length=200, verbose_name="نام خانوادگی")
     is_active = models.BooleanField(default=True, verbose_name="کاربر فعال")
     is_admin = models.BooleanField(default=False, verbose_name="وضعیت کارمندی")
-    is_company_admin = models.BooleanField(default=False, verbose_name="مدیر موسسه")
     courses = models.ManyToManyField(Classes, blank=True, verbose_name="دوره ها")
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, verbose_name="موسسه")
 
+    def is_company_admin(self):
+        if self.company:
+            return True
+        else:
+            return False
+    is_company_admin.boolean = True
+    is_company_admin.short_description = "مدیر موسسه"
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

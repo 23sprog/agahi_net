@@ -1,8 +1,11 @@
 from django.db import models
 
 
-# Create your models here.
 
+
+
+class IPAddress(models.Model):
+    ip_address = models.GenericIPAddressField(verbose_name="آدرس ای پی")
 
 
 class Categories(models.Model):
@@ -24,6 +27,9 @@ class Company(models.Model):
     slug = models.SlugField(unique=True, verbose_name="اسلاگ")
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, related_name="company", verbose_name="دسته بندی")
     desc = models.TextField(default="توضیحات", verbose_name="توضیحات")
+    city = models.ForeignKey("City", on_delete=models.SET_NULL, null=True, related_name="company", verbose_name="شهر")
+    # company_admin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="company", verbose_name="مدیر موسسه")
+
     class Meta:
         verbose_name = "آموزشگاه"
         verbose_name_plural = "آموشگاه ها"
@@ -40,6 +46,7 @@ class Classes(models.Model):
     price = models.IntegerField(verbose_name="قیمت دوره")
     is_active = models.BooleanField(verbose_name="در سایت وجود داشته باشد؟؟")
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, related_name="classes", verbose_name="دسته بندی")
+    views = models.ManyToManyField(IPAddress, blank=True, verbose_name="بازدید")
 
     class Meta:
         verbose_name = "کلاس"
@@ -50,3 +57,18 @@ class Classes(models.Model):
 
     def published(self):
         return self.objects.filter(is_active=True)
+
+
+class City(models.Model):
+    name = models.CharField(max_length=100, verbose_name="نام شهر")
+    position = models.PositiveSmallIntegerField(verbose_name="منطقه قرارگیری")
+
+    class Meta:
+        verbose_name = "شهر"
+        verbose_name_plural = "شهر ها"
+        ordering = [
+            "position"
+        ]
+
+    def __str__(self):
+        return self.name

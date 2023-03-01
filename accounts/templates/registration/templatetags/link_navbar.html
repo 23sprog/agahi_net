@@ -1,0 +1,6 @@
+    <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == url_name %}active{% endif %}"
+           href="{% if url_link is None %}{% url url_name %}{% else %}{% url url_link %}{% endif %}">
+            {{ content_name }}
+        </a>
+    </li>

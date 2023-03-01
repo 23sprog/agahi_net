@@ -11,18 +11,17 @@ class UserAdmin(MainUserAdmin):
     form = ChangeUserForm
     add_form = CreationUserForm
 
-    list_display = ("email", "last_name","is_admin","is_company_admin")
-    list_filter = ("email","is_company_admin")
+    list_display = ("email", "last_name", "is_admin", "is_company_admin")
+    list_filter = ("email",)
 
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
 
     fieldsets = (
-        (None, {"fields":("email","username","first_name","last_name")}),
-        ("جزییات دیگر", {"classes":("collapse",),"fields":("is_active","is_admin","is_company_admin","courses")}),
-		)
+        (None, {"fields": ("email", "username", "first_name", "last_name")}),
+        ("جزییات دیگر", {"classes": ("collapse",), "fields": ("is_active", "is_admin", "courses", "company")}),)
 
-    add_fieldsets=((None, {'fields':("email", "username", "password1", "password2")}),)
+    add_fieldsets = ((None, {'fields': ("email", "username", "password1", "password2")}),)
     
     filter_horizontal = ()
 

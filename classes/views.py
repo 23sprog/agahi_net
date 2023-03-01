@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from .models import *
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.models import User
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -39,4 +41,16 @@ class ClassDetailView(DetailView):
     template_name = "classes-templates/class_detail.html"
 
     def get_object(self):
-        return get_object_or_404(Classes, pk=self.kwargs["id"], slug=self.kwargs["slug"])
+        classes = get_object_or_404(Classes, pk=self.kwargs["id"], slug=self.kwargs["slug"])
+        if self.request.user.ip_address not in classes.views.all():
+            classes.views.add(self.request.user.ip_address)
+        return classes
+
+class BuyClassView(LoginRequiredMixin, View):
+    http_method_names = ("post",)
+    def post(self, request):
+        kwargs = request.POST
+        classes = get_object_or_404(Classes, pk=kwargs.get("pk"), slug=kwargs.get("slug"))
+        user = User.object.get(pk=request.user.pk)
+        user.courses.add(classes)
+        return redirect("classes:class_detail", classes.id, classes.slug)

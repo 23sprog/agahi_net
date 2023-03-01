@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, CreateView,UpdateView
+from django.views.generic import View, CreateView, UpdateView, TemplateView, DetailView
 from .forms import CreationUserForm, RegisterUserForm, LoginUserForm, ProfileUserForm
 from .models import User
 from django.contrib import messages
@@ -8,6 +8,8 @@ from django.contrib.auth import logout, login, authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from .mixins import AdminCompanyMixin
+from classes.models import Company, Classes
 
 
 def index(req):
@@ -70,3 +72,13 @@ class ProfileUserView(LoginRequiredMixin, UpdateView):
         kwargs = super(ProfileUserView, self).get_form_kwargs()
         kwargs.update({"user": self.request.user})
         return kwargs
+
+
+class CompanyUserView(AdminCompanyMixin, DetailView):
+    template_name = "registration/company_accounts.html"
+    context_object_name = "company"
+    def get_object(self, queryset=None):
+        return Company.objects.get(pk=self.request.user.company.pk)
+
+class ClassUserView(TemplateView):
+    template_name = "registration/class_accounts.html"

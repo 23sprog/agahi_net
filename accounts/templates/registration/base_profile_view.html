@@ -12,17 +12,20 @@
 <body>
     {% include "index/include_files/messages.html" %}
     <div class="card text-center mt-2 me-2 ms-2">
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="true" href="#">Active</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
+      <div class="card-header row">
+        <ul class="nav nav-tabs card-header-tabs col-10">
+            {% link_base_profile request "پروفایل"  "profile" %}
+            {% link_base_profile request "کلاس ها"  "classes_accounts" %}
+            {% link_base_profile request "موسسه"  "company_accounts" %}
+        </ul>
+        <ul class="row nav nav-tabs card-header-tabs col-2 ">
+            <li class="nav-item col-8">
+                <a href="{% url "index" %}" class="nav-link">نمایش سایت</a>
+            </li>
+            <li class="nav-item col-4">
+                <a href="{% url "account:logout" %}" class="nav-link"><img src="{% static "icon/exit.png" %}" alt="logout_pic" style="
+                width: 18px; height: 18px"></a>
+            </li>
         </ul>
       </div>
       <div class="card-body">

@@ -10,5 +10,8 @@ urlpatterns=[
     path("login/", LoginUserView.as_view(), name="login"),
     path("logout/", logout_user, name="logout"),
     path("profile/", ProfileUserView.as_view(), name="profile"),
+    path("classes/", ClassUserView.as_view(), name="classes_accounts"),
+    path("company/", CompanyUserView.as_view(), name="company_accounts"),
+
     # path("logout/", views.LogoutView.as_view(), name="logout"),
 ]

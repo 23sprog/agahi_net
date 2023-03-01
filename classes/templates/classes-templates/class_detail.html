@@ -8,11 +8,26 @@
     <div class="card mb-3 container p-2 shadow-lg" style="max-width: 80%;">
       <div class="row g-0">
         <div class="col-md-12 row">
-          <img src="{{ classes.img.url }}" class="img-fluid col-2" alt="لوگو{{ object.name }}">
-            <div class="col-7"></div>
-          <p class="text-success fs-3 col-3 text-center order-5 mt-5 font-med">{{ classes.price }} تومان</p>
-        </div>
+            <img src="{{ classes.img.url }}" class="img-fluid col-2" alt="لوگو{{ object.name }}">
+            <div class="col-6"></div>
+            {% if user.is_authenticated %}
+                {% if classes in user.courses.all %}
+                    <p class="badge bg-primary fs-3 text-center order-5 mt-5 col-4 font-med">خریداری شده</p>
+                {% else %}
+                    <form class="col-4" method="post" action="{% url "classes:class_buy" %}">{% csrf_token %}
+                        <input type="hidden" value="{{ classes.pk }}" name="pk">
+                        <input type="hidden" value="{{ classes.slug }}" name="slug">
+                        <p class="text-success fs-3 text-center order-5 mt-5">
 
+                            <button type="submit" class="btn btn-success btn-lg font-med">خرید دوره {{ classes.price }} تومان</button>
+                        </p>
+                    </form>
+                {% endif %}
+            {% else %}
+                <p class="badge bg-success fs-3 text-center order-5 mt-5 col-4 font-med">تومان {{ classes.price }}</p>
+            {% endif %}
+
+        </div>
         <div class="col-md-12 ">
           <div class="card-body p-3">
             <h5 class="card-title font-bold">{{ object.name }}</h5>
@@ -22,4 +37,5 @@
         </div>
       </div>
     </div>
+    {{ object.views.count }}
 {% endblock %}

@@ -1,5 +1,6 @@
     <li class="nav-item">
-        <a class="nav-link {% if request.resolver.url_name == url_name %}active{% endif %}" aria-current="true" href="#">
+        <a class="nav-link {% if request.resolver_match.url_name == route_page %}active{% endif %}"
+           href="{% url url_name %}">
             {{ content_name }}
         </a>
     </li>
